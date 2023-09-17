@@ -1,10 +1,11 @@
+<!--
 <h1 align="center">
   <a href="https://github.com/digitallyserviced/fxcapview">
-    <!-- Please provide path to your logo here -->
+
     <img align="center" style="margin:6px;" src="./assets/tdf-logo.png">
   </a>
 </h1>
-
+-->
 <div align="center">
 <div align="center">
 <img style="margin:6px;" src="./fxcap.gif">
