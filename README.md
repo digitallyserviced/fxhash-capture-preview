@@ -32,6 +32,10 @@
 
 </div>
 
+# FX Preview Capture Testing Toolkit 
+
+Try out what your sketch will look like when run through the preview/capture process. 
+
 <details open="open">
 <summary>Table of Contents</summary>
 
@@ -73,6 +77,7 @@
 ### Prerequisites
 
 > Go 1.18
+> Linux
 > [Gum](https://github.com/charmbracelet/gum)
 
 ### Installation
