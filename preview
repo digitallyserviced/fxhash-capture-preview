@@ -174,17 +174,20 @@ previewer_test() {
 		content=$1
 		echo $(gum style --width 64 --align left "${content}")
 	}
-	gum format -- "# FX Preview URL" '' "Enter the URL of the project you would like to capture. You can use a local project or any project that is web accessible." '' '## **WARNING!**' "While this testing apparatus can access any site. The live (fx) hash capture and preview invocations will not have unfettered access." "#### Examples" "- Local Development: [http://localhost:3301/](http://localhost:3301/)" "- Live: https://gateway.fxhash2.xyz/ipfs/QmThYrCv4zSmzFTtgrdqHkCvhAS5yDBCaW35YFUBM9jP9A"
+  gum style --width="64" "$(cat docs/FX_PREVIEW_URL.md | gum format)" ''
+	# gum format -- "# FX Preview URL" '' "Enter the URL of the project you would like to capture. You can use a local project or any project that is web accessible." '' '## **WARNING!**' "While this testing apparatus can access any site. The live (fx) hash capture and preview invocations will not have unfettered access." "#### Examples" "- Local Development: [http://localhost:3301/](http://localhost:3301/)" "- Live: https://gateway.fxhash2.xyz/ipfs/QmThYrCv4zSmzFTtgrdqHkCvhAS5yDBCaW35YFUBM9jP9A"
 
 	FX_PREVIEW_URL=$(get_input "${url}" "Generative Token URL" "${FX_DEFAULT_LOCAL_URL}")
 	did_field FX_PREVIEW_URL
 
-	gum format -- "# FX Preview Mode" '' "Choose preview mode to test VIEWPORT or CANVAS" '' "### VIEWPORT " '' "> Capture the full browsers viewport. " "### CANVAS " "> Capture the canvas HTML element only" ''
+  gum style --width="64" "$(cat docs/FX_PREVIEW_MODE.md | gum format)" ''
+	# gum format -- "# FX Preview Mode" '' "Choose preview mode to test VIEWPORT or CANVAS" '' "### VIEWPORT " '' "> Capture the full browsers viewport. " "### CANVAS " "> Capture the canvas HTML element only" ''
 	FX_PREVIEW_MODE=$(gum confirm --affirmative="VIEWPORT" --negative="CANVAS" "Select Capture Mode For Preview" --selected.background="5" --selected.foreground="0" && echo VIEWPORT || echo CANVAS)
 	did_field FX_PREVIEW_MODE
 
 	if [[ "${FX_PREVIEW_MODE}" == "VIEWPORT" ]]; then
-		gum format -- "# VIEWPORT Resolutin" '' "Define the \`X\`x\`Y\` of the browser viewport. " '' "### VALUES " '' "> Values must be greater than \`256\` and lower than \`2048\`. " ''
+  gum style --width="64" "$(cat docs/FX_PREVIEW_RES.md | gum format)" ''
+		# gum format -- "# VIEWPORT Resolutin" '' "Define the \`X\`x\`Y\` of the browser viewport. " '' "### VALUES " '' "> Values must be greater than \`256\` and lower than \`2048\`. " ''
 		FX_PREVIEW_RESX=$(get_num "${FX_PREVIEW_RESX}" "Width" "1024")
 		FX_PREVIEW_RESY=$(get_num "${FX_PREVIEW_RESY}" "Height" "1024")
 		did_field FX_PREVIEW_RESX 1
@@ -194,7 +197,9 @@ previewer_test() {
 		group_info_entrie=$(gum join --horizontal "${statud}" '' "${statudr}")
 
 	else
-		gum format -- "# FX CANVAS MODE CSS SELECTOR" '' "### CSS SELECTOR " "> Capture the canvas HTML element that is located at  CSS SELECTOR (eg. \`body > .canvas\` ) " ''
+      gum style --width="64" "$(cat docs/FX_PREVIEW_SELECTOR.md | gum format)" ''
+
+		# gum format -- "# FX CANVAS MODE CSS SELECTOR" '' "### CSS SELECTOR " "> Capture the canvas HTML element that is located at  CSS SELECTOR (eg. \`body > .canvas\` ) " ''
 		FX_PREVIEW_SELECTOR=$(get_input "" "CSS selector for CANVAS mode capture" "canvas")
 		did_field FX_PREVIEW_SELECTOR
 		# info=$(gum join --vertical "${title}" '' "$(gum style --foreground="234" ${FX_PREVIEW_SELECTOR})")
@@ -209,12 +214,13 @@ previewer_test() {
 	# info=$(gum join --vertical "${title}" '' "${group_info_entrie}")
 	# FX_PREVIEW_DELAY=$(get_input "${FX_PREVIEW_DELAY}" "Delay (s)" "10")
 	# FX_PREVIEW_MODE=$(gum confirm "VIEWPORT" "CANVAS" "Select Capture Mode For Preview" --selected.background="5" --selected.foreground="120")
-	gum format -- "# FX PREVIEW TRIGGER" '' "The capturing of a preview after the URL is loaded can be done after a DELAY or by the project using an FN_TRIGGER ( \`\$fx.preview()\` ) " "### DELAY" "> Use a fixed delay of X (s)econds before triggering capture of preview. Minimum of \`1s\` and maximum of \`300s\` " '' "### FN_TRIGGER" '' "> The capture will wait until your code calls the ( \`\$fx.preview()\` ) function before capturing the preview. "
-	FX_PREVIEW_TRIGGER=$(gum confirm --affirmative="DELAY" --negative="FN_TRIGGER" "Select Capture Mode For Preview" --selected.background="5" --selected.foreground="234" && echo DELAY || echo FN_TRIGGER)
+	# gum format -- "# FX PREVIEW TRIGGER" '' "The capturing of a preview after the URL is loaded can be done after a DELAY or by the project using an FN_TRIGGER ( \`\$fx.preview()\` ) " "### DELAY" "> Use a fixed delay of X (s)econds before triggering capture of preview. Minimum of \`1s\` and maximum of \`300s\` " '' "### FN_TRIGGER" '' "> The capture will wait until your code calls the ( \`\$fx.preview()\` ) function before capturing the preview. "
+  gum style --width="64" "$(cat docs/FX_PREVIEW_TRIGGER.md | gum format)"
+  FX_PREVIEW_TRIGGER=$(gum confirm --affirmative="DELAY" --negative="FXPREVIEW" "Select Capture Mode For Preview" --selected.background="5" --selected.foreground="234" && echo DELAY || echo FN_TRIGGER)
 	did_field FX_PREVIEW_TRIGGER
 
 	if [[ "${FX_PREVIEW_TRIGGER}" == "DELAY" ]]; then
-		FX_PREVIEW_DELAY=$(get_num "${FX_PREVIEW_DELAY}" 'Delay (s)' "10")
+		FX_PREVIEW_DELAY=$(get_num "${FX_PREVIEW_DELAY}" 'Delay (ms)' "1000")
 		did_field FX_PREVIEW_DELAY
 	fi
 
@@ -222,8 +228,8 @@ previewer_test() {
 	gum join --horizontal --align center "${title}" '  ' "${group_info_entries}"
 }
 run_preview() {
-	gum style --foreground='3' "removing old preview.png" # || gum style --foreground='5' "no old preview.png" 2>&1
-	rm "${FX_PREVIEW_OUTPUT}/preview.png" >/dev/null 2>&1
+	gum style --width 64 --align center --foreground='3' "removing old preview.png" # || gum style --foreground='5' "no old preview.png" 2>&1
+	rm "${FX_PREVIEW_OUTPUT:-output}/preview.png" >/dev/null 2>&1
 	set +m
 	{ node index.js "$@" &>output.log & } 2>&1
 	{ gum spin --spinner meter --timeout 0 --title "Runnin, lookin for preiew.png..." sleep 999 & }
@@ -233,7 +239,6 @@ run_preview() {
 }
 previewer_test  # |	gum style --align left --width="${terminal_width}" # "${1}" ''
 	printf '%b' "\033[A"
-let FX_PREVIEW_DELAY=$FX_PREVIEW_DELAY*1000
 while sleep 1; do
 	go=$(
 		gum confirm --affirmative="RUN NOW" --negative="EXIT" "Should The Preview Run Again?" --selected.background="5" --selected.foreground="0"

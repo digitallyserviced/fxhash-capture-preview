@@ -9,7 +9,7 @@ const puppeteer = require("puppeteer-core");
 // DEFINITIONS
 //
 
-const DELAY_MIN = 0;
+const DELAY_MIN = 1000;
 const DELAY_MAX = 300000;
 
 // the different capture modes
@@ -70,12 +70,11 @@ function isTriggerValid(triggerMode, delay) {
   }
   if (triggerMode === "DELAY") {
     // delay must be defined if trigger mode is delay
-    return (
-      typeof delay !== undefined &&
-      !isNaN(delay) &&
-      delay >= DELAY_MIN &&
-      delay <= DELAY_MAX
-    );
+    const delayOk = (delay) => delay >= DELAY_MIN && delay <= DELAY_MAX;
+    if (!delayOk(delay) && delay < DELAY_MIN && delayOk(delay * 1000)) {
+      delay *= 1000;
+    }
+    return typeof delay !== undefined && !isNaN(delay) && delayOk(delay);
   } else if (triggerMode === "FN_TRIGGER") {
     // fn trigger doesn't need any param
     return true;
@@ -217,7 +216,7 @@ const main = async () => {
       features,
     } = program.opts();
 
-    console.log(program.opts())
+    console.log(program.opts());
     // default parameter for triggerMode
     if (typeof triggerMode === "undefined") {
       triggerMode = "DELAY";
