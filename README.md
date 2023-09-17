@@ -7,7 +7,7 @@
 
 <div align="center">
 <div align="center">
-<img style="margin:6px;" src="./assets/fxcapviewcast.gif">
+<img style="margin:6px;" src="./fxcap.gif">
 </div>
   <br />
   <a href="#about"><strong>Explore the screenshots »</strong></a>
