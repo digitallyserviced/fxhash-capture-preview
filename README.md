@@ -38,19 +38,7 @@
 - [About](#about)
   - [Features](#features)
 - [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Font Directories](#the-font-directories-searched)
-- [Usage](#usage)
-  - [`Clock`](#clock)
-  - [`Print`](#print)
-    - [Examples](#print-examples)
-  - [`Watch`](#watch)
-    - [Examples](#watch-examples)
-    - [Options](#watch-options)
-  - [`Fonts`](#fonts)
-    - [Examples](#fonts-examples)
-    - [Options](#fonts-options)
+
 - [Support](#support)
 - [Project assistance](#project-assistance)
 - [Contributing](#contributing)
@@ -73,40 +61,7 @@
   ### (fx)hash docs
 
   - [(fx)hash project settings](https://www.fxhash.xyz/doc/artist/project-settings)  
-    - [capture settings](https://www.fxhash.xyz/doc/artist/project-settings#capture-settings) font parser and console text renderer. This utility was inspired by the [`tdfiglet`](https://github.com/tat3r/tdfiglet) CLI utility. I wanted to also use the fonts in another utility I am working on. 
-
-<img align="right" style="margin:6px;" width="500" src="./assets/fxcapview-preview.gif">
-
-`tdfiglet` was missing some features and the ability to use more than a single font per file. I realized there was multiple fonts with different color schemes in some of them as well as font packs containing files with lots of different fonts within one font file.
-
-### Features
-
-- Render __TheDraw__ fonts in the terminal
-- Supports **COLOR** font types only as they are more plentiful and cooler looking
-- Configure spacing between characters, the size a ` `(space) character takes up in text 
-- Use a random font for content
-- Supported characters and a missing character view available when listing fonts to find a font that contains the necessary characters.
-- `print` - use arguments or stdin as the text content to render
-- `watch` - specify a command to repeat and render the output (clocks, status, live banner)
-- `clock` - alias to print `date +%H:%m:%S` to the console (tmux lock, console clock) `./fxcapview clock`
-- `fonts` - dump the list of fonts available with information about the font and coloring previews `./fxcapview fonts -v`
-- Preview fonts when dumping the list with customizable content `./fxcapview fonts -vp -t text`
-- Shell completion of all flags and commands, completion of font file names found, completion of fonts found within a single font file 
-<!-- ![fxcapview gif preview](assets/fxcapview-preview.gif) -->
-
-<details>
-<summary>Screenshots</summary>
-<br>
-
-> **[?]**
-> Please provide your screenshots here.
-
-|                             Zsh / Bash / Fish Completion                               |                               Font Dump Verbose with Preview                               |
-| :-------------------------------------------------------------------: | :--------------------------------------------------------------------: |
-| <img src="assets/fxcapview-font-completion.png" width="100%"> | <img src="assets/fxcapview-font-dump-verbose.png" width="100%"> |
-
-</details>
-
+    - [capture settings](https://www.fxhash.xyz/doc/artist/project-settings#capture-settings) font parser and console text renderer. This utility was inspired by the 
 ### Built With
 
 > Go 1.18
@@ -118,6 +73,7 @@
 ### Prerequisites
 
 > Go 1.18
+> [Gum](https://github.com/charmbracelet/gum)
 
 ### Installation
 
